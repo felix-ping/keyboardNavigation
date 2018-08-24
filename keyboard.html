@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Keyboard</title>
+    <link rel="stylesheet" href="keyboard.css">
+</head>
+<body>
+    <main>
+        <p>hover的时候显示网址,没有网址的显示请定义此按键,圆点最后用css做,可以适当带点动画,背景图不要用外链的,可能会崩,可以添加数字键,增加按键的数量,图标加载失败的直接不显示?</p>
+        <div class="wrapped" id="main"></div>
+    </main>
+    
+</body>
+<script>
+    //1.初始化数据
+
+    var hashA=init()
+    var key=hashA["key"]
+    var hash=hashA["hash"]
+    
+  
+
+    //2.遍历key 生成kbd标签及内部结构
+    generateKeyboard(key,hash)
+    function generateKeyboard(key,hash){
+        for (var index = 0; index < key.length; index++) {
+            var div = tag('div', { className: 'row' })
+            main.appendChild(div)
+
+            var row = key[index]
+
+            for (var index2 = 0; index2 < row.length; index2++) {
+                var span = tag('span', { className: 'text' })
+                span.textContent = row[index2]
+
+                var button1 = tag('button', { id: row[index2] })
+                button1.textContent = 'Edit'
+                button1.onclick = function (xzkjcnxlkcjlk) {
+                    var button2 = xzkjcnxlkcjlk.target
+                    var img2 = button2.previousSibling
+                    var key2 = button2.id
+                    var x = prompt('给我个网址')
+                    hash[key2] = x
+                    img2.src = 'http://' + x + '/favicon.ico'
+                    img2.onerror = function (error) {
+                        error.target.src = './dot.jpg'
+                    }
+                    localStorage.setItem('aa', JSON.stringify(hash))
+                }
+
+                var image = tag('img')
+                if (hash[row[index2]]) {
+                    image.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+                } else {
+                    image.src = './dot.jpg'
+                }
+                image.onerror = function (error) {
+                    error.target.src = './dot.jpg'
+                }
+
+                var keyb = tag('kbd', { className: 'key' })
+                keyb.appendChild(span)
+                keyb.appendChild(image)
+                keyb.appendChild(button1)
+
+                div.appendChild(keyb)
+            }
+        }
+    } 
+
+    //3. 监听键盘
+    //鼠标点击事件//图标默认样式hover
+    listenToUser(hash)
+    function listenToUser(hash) {
+        document.onkeypress = function (xzkjcnxlkcjlk) {
+            var key1 = xzkjcnxlkcjlk.key
+            var web = hash[key1]
+            console.log(web)
+            window.open('http://' + web, '_blank')
+        }
+  
+    }
+  
+
+
+
+    function getFromLocalStorage(name) {
+        return JSON.parse(localStorage.getItem(name || 'null'))
+    }
+
+
+        function init() {
+            var key = {
+                //添加上数字键和源代码键
+                '0': { 0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', length: 10 },
+                '1': { 0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l', length: 9 },
+                '2': { 0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm', length: 7 },
+                length: 3
+            }
+            var hash = {
+                'q': 'qq.com',
+                'w': 'weibo.com',
+                'e': 'zhihu.com',
+                'r': 'renren.com',
+                't': 'taobao.com',
+                'y': 'youku.com',
+                'a':'amazon.com',
+                'b':'bilibili.com',
+                'z':'zhihu.com',
+                "p":'aqiyi.com',
+                'x':'xinlang.com',
+                'c':'163.com',
+                'v':'blizarrd.com',
+                'b':'baidu.com',
+                'm':'meituan.com',
+                'l':'360.com',
+                'h':'souhu.com',
+                'g':'sogou.com',
+                'u':'uc.com'
+
+
+            }
+            var hashNew = getFromLocalStorage('aa')
+            if (hashNew) {
+                hash = hashNew
+            }
+            return{
+            "key" :key    ,
+            "hash":hash   
+
+
+            }
+           
+        }
+
+    function tag(tagName, attributes) {
+        var element = document.createElement(tagName)
+        for (var key in attributes) {
+             element[key] = attributes[key] //key可以为className id textContent
+         }
+        return element
+    }
+</script>
+</html>
