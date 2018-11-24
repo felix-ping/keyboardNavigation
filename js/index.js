@@ -43,7 +43,7 @@ function generateKeyboard(key, hash) {
             image.onerror = function (error) {
                 error.target.src = ''
             }
-            var keyb = tag('kbd', { className: 'key',id: row[index2] })
+            var keyb = tag('kbd', { className: 'key shake' ,id: row[index2] })
             keyb.appendChild(span)
             keyb.appendChild(image)
             keyb.appendChild(button1)
