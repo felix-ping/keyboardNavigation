@@ -17,7 +17,7 @@ function generateKeyboard(key, hash) {
             var span = tag('span', { className: 'text' })
             span.textContent = row[index2]
             var button1 = tag('img', { id: row[index2],className: 'button' })
-            button1.src='./edit.png'
+            button1.src='./img/edit.png'
             button1.onclick = function (xzkjcnxlkcjlk) {
                 lock =true
                 var button2 = xzkjcnxlkcjlk.target
